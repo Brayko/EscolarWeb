@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instituto Tecnológico del Futuro</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #4682B4;
+            --primary-dark: #36648b;
+            --secondary-color: #f4f4f4;
+            --text-color: #333;
+            --white: #ffffff;
+            --accent: #ff7f50;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        body {
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: var(--white);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .btn-login-nav {
+            background-color: var(--primary-color);
+            color: white !important;
+            padding: 8px 20px;
+            border-radius: 20px;
+        }
+
+        .hero-slider {
+            position: relative;
+            height: 500px;
+            overflow: hidden;
+            background: #000;
+        }
+
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .slide.active {
+            opacity: 1;
+        }
+
+        .slide::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+        }
+
+        .slide-content {
+            position: relative;
+            z-index: 1;
+            color: white;
+            max-width: 800px;
+            padding: 20px;
+        }
+
+        .slide-content h2 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 12px 30px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        .cta-button:hover {
+            background-color: var(--primary-dark);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+            color: var(--primary-color);
+            font-size: 2.2rem;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background: var(--accent);
+            margin: 10px auto;
+        }
+
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .news-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s;
+        }
+
+        .news-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .news-img {
+            height: 200px;
+            background-color: #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #777;
+        }
+
+        .news-content {
+            padding: 20px;
+        }
+
+        .news-date {
+            color: var(--primary-color);
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        .degrees-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            justify-content: center;
+        }
+
+        .degree-card {
+            background: white;
+            flex: 1 1 300px;
+            border-radius: 10px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            border-top: 5px solid var(--primary-color);
+        }
+
+        .degree-icon {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+
+        .plan-btn {
+            margin-top: 20px;
+            background: transparent;
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+            padding: 8px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .plan-btn:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .study-plan {
+            display: none;
+            margin-top: 20px;
+            text-align: left;
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 5px;
+            font-size: 0.9rem;
+        }
+
+        .study-plan ul {
+            list-style-type: none;
+        }
+        
+        .study-plan li::before {
+            content: "📚 ";
+        }
+
+        .library-section {
+            background-color: var(--primary-color);
+            color: white;
+            text-align: center;
+        }
+
+        .library-section .section-title {
+            color: white;
+        }
+        
+        .library-section .section-title::after {
+            background: white;
+        }
+
+        .search-bar {
+            width: 100%;
+            max-width: 600px;
+            padding: 15px;
+            border-radius: 30px;
+            border: none;
+            margin-bottom: 20px;
+            font-size: 1rem;
+        }
+
+        .lib-resources {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .lib-item {
+            background: rgba(255,255,255,0.1);
+            padding: 20px;
+            border-radius: 8px;
+            width: 150px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .lib-item:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        .finance-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .finance-card {
+            background: white;
+            padding: 30px;
+            text-align: center;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+
+        .finance-icon {
+            font-size: 2.5rem;
+            color: var(--accent);
+            margin-bottom: 15px;
+        }
+
+        .modal {
+            display: none; 
+            position: fixed; 
+            z-index: 2000; 
+            left: 0;
+            top: 0;
+            width: 100%; 
+            height: 100%; 
+            background-color: rgba(0,0,0,0.6); 
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 40px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 400px;
+            position: relative;
+            text-align: center;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-size: 24px;
+            cursor: pointer;
+            color: #aaa;
+        }
+
+        .login-form input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .login-form button {
+            width: 100%;
+            padding: 12px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        #grades-display {
+            display: none;
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        th, td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .grade-pass { color: green; font-weight: bold; }
+        .grade-fail { color: red; font-weight: bold; }
+
+        footer {
+            background-color: #222;
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            max-width: 1200px;
+            margin: 0 auto;
+            gap: 30px;
+        }
+
+        .footer-col h4 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                gap: 15px;
+            }
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            .slide-content h2 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <i class="fas fa-graduation-cap"></i> IT FUTURO
+            </div>
+            <div class="nav-links">
+                <a href="#inicio">Inicio</a>
+                <a href="#noticias">Noticias</a>
+                <a href="#carreras">Oferta Educativa</a>
+                <a href="#biblioteca">Biblioteca</a>
+                <a href="#finanzas">Finanzas</a>
+                <a href="#" class="btn-login-nav" onclick="openLogin()">Portal Alumno</a>
+            </div>
+        </nav>
+    </header>
+
+    <section id="inicio" class="hero-slider">
+        <div class="slide active" style="background-image: url('image/ima.jpg');">
+            <div class="slide-content">
+                <h2>Admisiones Abiertas</h2>
+                <p>Únete a la excelencia académica. Becas disponibles.</p>
+                <br>
+                <a href="#" class="cta-button">Inscribirme Ahora</a>
+            </div>
+        </div>
+        <div class="slide" style="background-image: url('image/image1.avif');">
+            <div class="slide-content">
+                <h2>Congreso de Tecnología</h2>
+                <p>Participa en nuestro evento anual de innovación y desarrollo.</p>
+                <br>
+                <a href="#noticias" class="cta-button">Ver Detalles</a>
+            </div>
+        </div>
+        <div class="slide" style="background-image: url('image/image2.avif');">
+            <div class="slide-content">
+                <h2>Biblioteca Digital 24/7</h2>
+                <p>Accede a miles de recursos desde cualquier lugar.</p>
+                <br>
+                <a href="#biblioteca" class="cta-button">Acceder</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="noticias" class="container">
+        <h2 class="section-title">Noticias y Eventos</h2>
+        <div class="news-grid">
+            <div class="news-card">
+                <div class="news-img"><i class="fas fa-calendar-alt fa-3x" ></i></div>
+                <div class="news-content">
+                    <p class="news-date">15 Octubre, 2026</p>
+                    <h3>Semana de la Ingeniería</h3>
+                    <p>Actividades lúdicas y conferencias magistrales en el auditorio principal.</p>
+                </div>
+            </div>
+            <div class="news-card">
+                <div class="news-img"><i class="fas fa-trophy fa-3x"></i></div>
+                <div class="news-content">
+                    <p class="news-date">20 Octubre</p>
+                    <h3>Torneo de Fútbol Interfacultades</h3>
+                    <p>Gran final este viernes en la cancha 1. ¡Ven a apoyar a tu equipo!</p>
+                </div>
+            </div>
+            <div class="news-card">
+                <div class="news-img"><i class="fas fa-book-open fa-3x"></i></div>
+                <div class="news-content">
+                    <p class="news-date">Realizado</p>
+                    <h3>Feria del Libro</h3>
+                    <p>Gracias a todos por su asistencia. Fue un éxito rotundo.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="carreras" class="container" style="background-color: #eef2f5;">
+        <h2 class="section-title">Nuestras Licenciaturas</h2>
+        <div class="degrees-container">
+            <div class="degree-card">
+                <i class="fas fa-laptop-code degree-icon"></i>
+                <h3>Ingeniería en Sistemas</h3>
+                <p>Desarrollo de software y ciberseguridad.</p>
+                <button class="plan-btn" onclick="togglePlan('plan1')">Ver Plan de Estudios</button>
+                <div id="plan1" class="study-plan">
+                    <h4>Plan de Estudios:</h4>
+                    <ul>
+                        <li>1º: Cálculo Diferencial, Lógica Prog.</li>
+                        <li>2º: Estructura de Datos, Física</li>
+                        <li>3º: Bases de Datos, POO</li>
+                        <li>4º: Redes, Ingeniería Web</li>
+                        <li>... (8 Semestres)</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="degree-card">
+                <i class="fas fa-chart-line degree-icon"></i>
+                <h3>Lic. en Administración</h3>
+                <p>Gestión empresarial, finanzas y recursos humanos.</p>
+                <button class="plan-btn" onclick="togglePlan('plan2')">Ver Plan de Estudios</button>
+                <div id="plan2" class="study-plan">
+                    <h4>Plan de Estudios:</h4>
+                    <ul>
+                        <li>1º: Introducción a la Admón, Microeconomía</li>
+                        <li>2º: Contabilidad I, Estadística</li>
+                        <li>3º: Mercadotecnia, Derecho Mercantil</li>
+                        <li>4º: Finanzas Corporativas</li>
+                        <li>... (8 Semestres)</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="degree-card">
+                <i class="fas fa-balance-scale degree-icon"></i>
+                <h3>Licenciatura en Derecho</h3>
+                <p>Justicia, leyes y defensa jurídica.</p>
+                <button class="plan-btn" onclick="togglePlan('plan3')">Ver Plan de Estudios</button>
+                <div id="plan3" class="study-plan">
+                    <h4>Plan de Estudios:</h4>
+                    <ul>
+                        <li>1º: Introducción al Derecho, Sociología</li>
+                        <li>2º: Derecho Romano, Historia</li>
+                        <li>3º: Derecho Civil I, Penal I</li>
+                        <li>4º: Amparo y Juicios Orales</li>
+                        <li>... (9 Semestres)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="biblioteca" class="library-section container" style="width: 100%; max-width: 100%;">
+        <h2 class="section-title">Biblioteca Virtual</h2>
+        <input type="text" class="search-bar" placeholder="Buscar libros, tesis o artículos...">
+        <div class="lib-resources">
+            <div class="lib-item"><i class="fas fa-book fa-2x"></i><br>Libros</div>
+            <div class="lib-item"><i class="fas fa-globe fa-2x"></i><br>Revistas</div>
+        </div>
+    </section>
+
+    <section id="finanzas" class="container">
+        <h2 class="section-title">Área de Finanzas</h2>
+        <div class="finance-grid">
+            <div class="finance-card">
+                <i class="fas fa-credit-card finance-icon"></i>
+                <h3>Pago de Colegiaturas</h3>
+                <p>Realiza tus pagos en línea de forma segura.</p>
+                <br>
+                <button class="plan-btn">Pagar Ahora</button>
+            </div>
+            <div class="finance-card">
+                <i class="fas fa-file-invoice-dollar finance-icon"></i>
+                <h3>Constancias</h3>
+                <p>Solicita constancias de estudio o no adeudo.</p>
+                <br>
+                <button class="plan-btn">Solicitar</button>
+            </div>
+            <div class="finance-card">
+                <i class="fas fa-list-alt finance-icon"></i>
+                <h3>Kardex</h3>
+                <p>Descarga tu historial académico completo.</p>
+                <br>
+                <button class="plan-btn">Descargar</button>
+            </div>
+        </div>
+    </section>
+
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeLogin()">&times;</span>
+            <h2 style="color: var(--primary-color); margin-bottom: 20px;">Acceso Alumnos</h2>
+            <div class="login-form">
+                <input type="text" id="username" placeholder="Usuario">
+                <input type="password" id="password" placeholder="Contraseña">
+                <button onclick="login()">Ingresar</button>
+                <p id="login-error" style="color: red; display: none; margin-top: 10px;">Credenciales incorrectas</p>
+            </div>
+            
+            <div id="grades-display">
+                <h3 style="text-align: center; margin-bottom: 10px;">Boleta de Calificaciones Actual</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Materia</th>
+                            <th>Calificación</th>
+                        </tr>
+                    </thead>
+                    <tbody id="grades-body">
+                    </tbody>
+                </table>
+                <button class="plan-btn" style="width: 100%; margin-top: 15px;" onclick="closeLogin()">Cerrar</button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-col">
+                <h4>Contacto</h4>
+                <p>Universidad IT FUTURO</p>
+                <p>Tel: (555) 123-4567</p>
+                <p>info@itfuturo.edu</p>
+            </div>
+            <div class="footer-col">
+                <h4>Enlaces Rápidos</h4>
+                <p><a href="#" style="color: #ccc; text-decoration: none;">Aviso de Privacidad</a></p>
+            </div>
+            <div class="footer-col">
+                <h4>Síguenos</h4>
+                <div style="font-size: 1.5rem;">
+                    <i class="fab fa-facebook" style="margin: 0 10px;"></i>
+                    <i class="fab fa-instagram" style="margin: 0 10px;"></i>
+                    <i class="fab fa-twitter" style="margin: 0 10px;"></i>
+                </div>
+            </div>
+        </div>
+        <p style="margin-top: 30px; font-size: 0.8rem; color: #777;">&copy; 2026 Instituto Tecnológico del Futuro. Todos los derechos reservados.</p>
+    </footer>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        
+        function nextSlide() {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (currentSlide + 1) % slides.length;
+            slides[currentSlide].classList.add('active');
+        }
+
+        setInterval(nextSlide, 5000);
+
+        function togglePlan(id) {
+            const plan = document.getElementById(id);
+            if (plan.style.display === "block") {
+                plan.style.display = "none";
+            } else {
+                plan.style.display = "block";
+            }
+        }
+
+        const modal = document.getElementById("loginModal");
+
+        function openLogin() {
+            modal.style.display = "flex";
+            document.getElementById('grades-display').style.display = 'none';
+            document.getElementById('login-error').style.display = 'none';
+            document.querySelector('.login-form').style.display = 'block';
+        }
+
+        function closeLogin() {
+            modal.style.display = "none";
+        }
+
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                closeLogin();
+            }
+        }
+
+        function login() {
+            const user = document.getElementById('username').value;
+            const pass = document.getElementById('password').value;
+            const errorMsg = document.getElementById('login-error');
+            const gradesDisplay = document.getElementById('grades-display');
+            const loginForm = document.querySelector('.login-form');
+
+            if (user === 'alumno1' && pass === '1234') {
+                errorMsg.style.display = 'none';
+                loginForm.style.display = 'none';
+                gradesDisplay.style.display = 'block';
+                loadGrades();
+            } else {
+                errorMsg.style.display = 'block';
+            }
+        }
+
+        function loadGrades() {
+            const subjects = [
+                "Matemáticas Discretas", "Programación I", "Inglés I", "Física I", 
+                "Ética Profesional", "Introducción a la Computación", "Cálculo Diferencial", "Taller de Redacción"
+            ];
+            
+            let html = "";
+            subjects.forEach(sub => {
+                let grade = Math.floor(Math.random() * (10 - 7 + 1)) + 7; 
+                let gradeClass = grade >= 7 ? 'grade-pass' : 'grade-fail';
+                html += `<tr><td>${sub}</td><td class="${gradeClass}">${grade}</td></tr>`;
+            });
+
+            document.getElementById('grades-body').innerHTML = html;
+        }
+    </script>
+</body>
+</html>
